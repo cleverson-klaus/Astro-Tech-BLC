@@ -1,0 +1,13 @@
+{
+  "name": "astro-tech-blc",
+  "version": "1.0.0",
+  "description": "Servidor local para o Astro Tech BLC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+} 

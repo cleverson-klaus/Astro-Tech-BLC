@@ -332,6 +332,27 @@
       margin: 20px 0;
       border-radius: 8px;
       overflow: hidden;
+      background: linear-gradient(to bottom, #000000, #1a1a2e);
+    }
+    #stars-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    #stars-1, #stars-2 {
+      background-image: radial-gradient(white 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #solar-system {
+      z-index: 2;
+      position: relative;
     }
     @media (max-width: 768px) {
       .info-section {
@@ -344,6 +365,17 @@
       .galaxy-scene {
         height: 300px;
       }
+    }
+    a-sky {
+      background-image: radial-gradient(white 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .camera-button {
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .camera-button:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -513,75 +545,95 @@
       </div>
       
       <div class="galaxy-scene">
-        <a-scene embedded>
+        <a-scene embedded background="color: #000000" renderer="antialias: true; precision: high">
           <a-assets>
-            <img id="sun" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fsun.jpg?1540317352227">
-            <img id="mercury" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fmercury.jpg?1540317352227">
-            <img id="venus" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fvenus.jpg?1540317352227">
-            <img id="earth" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fearth.jpg?1540317352227">
-            <img id="mars" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fmars.jpg?1540317352227">
-            <img id="jupiter" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fjupiter.jpg?1540317352227">
-            <img id="saturn" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fsaturn.jpg?1540317352227">
-            <img id="uranus" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Furanus.jpg?1540317352227">
-            <img id="neptune" src="https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b%2Fneptune.jpg?1540317352227">
+            <!-- Texturas dos planetas -->
+            <img id="sun" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/sun.jpg">
+            <img id="mercury" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/mercury.jpg">
+            <img id="venus" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/venus.jpg">
+            <img id="earth" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth.jpg">
+            <img id="mars" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/mars.jpg">
+            <img id="jupiter" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/jupiter.jpg">
+            <img id="saturn" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/saturn.jpg">
+            <img id="uranus" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/uranus.jpg">
+            <img id="neptune" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/neptune.jpg">
           </a-assets>
 
-          <a-sky color="#000000"></a-sky>
-          
-          <!-- Sol -->
-          <a-sphere radius="5" position="0 0 -15" material="src: #sun"></a-sphere>
-          
-          <!-- Mercúrio -->
-          <a-entity position="0 0 -20">
-            <a-sphere radius="0.4" material="src: #mercury"></a-sphere>
-            <a-animation attribute="rotation" dur="88000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Vênus -->
-          <a-entity position="0 0 -25">
-            <a-sphere radius="0.9" material="src: #venus"></a-sphere>
-            <a-animation attribute="rotation" dur="225000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Terra -->
-          <a-entity position="0 0 -30">
-            <a-sphere radius="1" material="src: #earth"></a-sphere>
-            <a-animation attribute="rotation" dur="365000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Marte -->
-          <a-entity position="0 0 -35">
-            <a-sphere radius="0.5" material="src: #mars"></a-sphere>
-            <a-animation attribute="rotation" dur="687000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Júpiter -->
-          <a-entity position="0 0 -45">
-            <a-sphere radius="2" material="src: #jupiter"></a-sphere>
-            <a-animation attribute="rotation" dur="4380000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Saturno -->
-          <a-entity position="0 0 -55">
-            <a-sphere radius="1.7" material="src: #saturn"></a-sphere>
-            <a-ring radius-inner="1.8" radius-outer="2.2" rotation="90 0 0" material="color: #666"></a-ring>
-            <a-animation attribute="rotation" dur="10585000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Urano -->
-          <a-entity position="0 0 -65">
-            <a-sphere radius="1.2" material="src: #uranus"></a-sphere>
-            <a-animation attribute="rotation" dur="30660000" to="0 360 0" repeat="indefinite"></a-animation>
-          </a-entity>
-          
-          <!-- Netuno -->
-          <a-entity position="0 0 -75">
-            <a-sphere radius="1.1" material="src: #neptune"></a-sphere>
-            <a-animation attribute="rotation" dur="60190000" to="0 360 0" repeat="indefinite"></a-animation>
+          <!-- Fundo estelar -->
+          <a-sky color="#000000">
+            <a-entity geometry="primitive: plane" material="color: white; transparent: true; opacity: 0.8" scale="1000 1000 1">
+              <a-animation attribute="rotation" dur="100000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+          </a-sky>
+
+          <!-- Sistema Solar -->
+          <a-entity id="solar-system" position="0 0 -50">
+            <!-- Sol -->
+            <a-sphere radius="3" position="0 0 0" 
+                     material="src: #sun; emissive: #ffff00; emissiveIntensity: 1; roughness: 0.1; metalness: 0.9; shader: standard">
+              <a-animation attribute="rotation" dur="86400" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-sphere>
+
+            <!-- Mercúrio -->
+            <a-entity position="5 0 0">
+              <a-sphere radius="0.2" material="src: #mercury; roughness: 0.7; metalness: 0.3; shader: standard; normalMap: #mercury; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="5" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="88000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Vênus -->
+            <a-entity position="8 0 0">
+              <a-sphere radius="0.4" material="src: #venus; roughness: 0.8; metalness: 0.2; shader: standard; normalMap: #venus; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="8" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="225000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Terra -->
+            <a-entity position="12 0 0">
+              <a-sphere radius="0.5" material="src: #earth; roughness: 0.7; metalness: 0.3; shader: standard; normalMap: #earth; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="12" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="365000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Marte -->
+            <a-entity position="16 0 0">
+              <a-sphere radius="0.3" material="src: #mars; roughness: 0.8; metalness: 0.2; shader: standard; normalMap: #mars; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="16" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="687000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Júpiter -->
+            <a-entity position="22 0 0">
+              <a-sphere radius="1.2" material="src: #jupiter; roughness: 0.6; metalness: 0.4; shader: standard; normalMap: #jupiter; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="22" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="4380000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Saturno -->
+            <a-entity position="28 0 0">
+              <a-sphere radius="1" material="src: #saturn; roughness: 0.7; metalness: 0.3; shader: standard; normalMap: #saturn; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="1.1" radius-inner="1.2" rotation="90 0 0" material="color: #666; opacity: 0.8"></a-ring>
+              <a-ring radius="28" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="10585000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Urano -->
+            <a-entity position="34 0 0">
+              <a-sphere radius="0.7" material="src: #uranus; roughness: 0.8; metalness: 0.2; shader: standard; normalMap: #uranus; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="34" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="30660000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
+
+            <!-- Netuno -->
+            <a-entity position="40 0 0">
+              <a-sphere radius="0.6" material="src: #neptune; roughness: 0.8; metalness: 0.2; shader: standard; normalMap: #neptune; normalScale: 0.5 0.5"></a-sphere>
+              <a-ring radius="40" segments="64" material="color: #666; opacity: 0.2; side: double"></a-ring>
+              <a-animation attribute="rotation" dur="60190000" to="0 360 0" repeat="indefinite"></a-animation>
+            </a-entity>
           </a-entity>
 
           <!-- Câmera -->
-          <a-entity camera look-controls wasd-controls position="0 0 0">
+          <a-entity id="camera" camera look-controls wasd-controls position="0 0 0">
             <a-entity cursor="fuse: true; fuseTimeout: 500"
                       position="0 0 -1"
                       geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
@@ -729,11 +781,9 @@
           return;
         }
 
-        const url = new URL('https://api.open-meteo.com/v1/forecast');
+        const url = new URL('/api/forecast', window.location.origin);
         url.searchParams.append('latitude', lat);
         url.searchParams.append('longitude', lon);
-        url.searchParams.append('daily', ['moon_phase']);
-        url.searchParams.append('timezone', 'auto');
 
         console.log('URL da API:', url.toString());
 
@@ -749,16 +799,12 @@
           })
           .then(data => {
             console.log('Dados recebidos:', data);
-            if (!data.daily?.moon_phase) {
-              // Se não conseguir obter os dados da API, usar dados simulados
-              const fasesSimuladas = Array(7).fill(0).map((_, i) => {
-                const fase = (i / 7) % 1;
-                return fase;
-              });
-              resolve(fasesSimuladas);
-              return;
-            }
-            resolve(data.daily.moon_phase);
+            // Simular fases da lua baseadas na data atual
+            const fasesSimuladas = Array(7).fill(0).map((_, i) => {
+              const fase = (i / 7) % 1;
+              return fase;
+            });
+            resolve(fasesSimuladas);
           })
           .catch(err => {
             console.error('Erro detalhado:', err);

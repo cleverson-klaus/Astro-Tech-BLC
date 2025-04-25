@@ -1,6 +1,6 @@
 # Astro Tech BLC
 
-Aplicação web para visualização de dados astronômicos e fases da lua.
+Aplicação web para monitoramento astronômico.
 
 ## Estrutura do Projeto
 
@@ -38,29 +38,31 @@ cd astro-tech-blc
 pip install -r requirements.txt
 ```
 
-## Executando a Aplicação
+## Como rodar localmente
 
-1. Inicie o servidor Flask:
-```bash
-python src/app.py
-```
-
-2. Acesse a aplicação no navegador:
-```
-http://localhost:5000
-```
-
-3. Faça login com as credenciais:
-- Usuário: admin
-- Senha: admin123
+1. Certifique-se de ter o Node.js instalado em seu computador
+2. Abra o terminal na pasta do projeto
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+4. Inicie o servidor:
+   ```bash
+   npm start
+   ```
+5. Acesse o site em seu navegador:
+   ```
+   http://localhost:3000
+   ```
 
 ## Funcionalidades
 
-- Visualização de fases da lua
-- Mapa estelar interativo
-- Geolocalização automática
-- Interface responsiva
-- Sistema de login seguro
+- Visualização do céu noturno
+- Fases da lua
+- Informações climáticas
+- Rastreamento de satélites
+- Dados da galáxia
+- Sistema solar em 3D
 
 ## Tecnologias Utilizadas
 
