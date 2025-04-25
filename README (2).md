@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="capa-astrotech.png" alt="Capa AstroTech" width="100%" />
-</p>
+![Capa do Projeto AstroTech](./capa-astrotech.png)
 
 # Planejamento do Projeto — AstroTech
 
