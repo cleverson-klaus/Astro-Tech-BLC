@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro Tech BLC</title>
+  <link rel="icon" type="image/png" href="images/astro-tech-logo.png">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    input {
+      width: 200px;
+      background-color: #1b263b;
+      color: white;
+    }
+    input:focus {
+      outline: 2px solid #4a90e2;
+    }
+    button {
+      background-color: #4a90e2;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background-color: #357abd;
+      transform: translateY(-2px);
+    }
+    button[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: #666;
+      transform: none;
+    }
+    #astro-info {
+      margin: 20px auto;
+      background-color: #1b263b;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      min-height: 100px;
+    }
+    #sky-map {
+      display: block;
+      margin: 20px auto;
+      width: 100%;
+      height: 400px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .loading {
+      display: none;
+      margin: 20px;
+    }
+    .error-message {
+      color: #ff6b6b;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: rgba(255, 107, 107, 0.1);
+      border-radius: 5px;
+    }
+    .coordinates-input {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .moon-phase {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .moon-phase-item {
+      background-color: #2c3e50;
+      padding: 10px;
+      border-radius: 5px;
+      min-width: 150px;
+    }
+    .moon-phase-value {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    .moon-phase-date {
+      color: #95a5a6;
+      font-size: 0.9em;
+    }
+    .location-info {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #2c3e50;
+      border-radius: 5px;
+    }
+    .header-logo {
+      width: 50px;
+      height: 50px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    @media (max-width: 768px) {
+      .coordinates-input {
+        flex-direction: column;
+        align-items: center;
+      }
+      input {
+        width: 80%;
+      }
+      #sky-map {
+        height: 300px;
+      }
+      #astro-info {
+        width: 95%;
+      }
+      .moon-phase {
+        flex-direction: column;
+        align-items: center;
+      }
+      .moon-phase-item {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><img src="images/astro-tech-logo.png" alt="Astro Tech Logo" class="header-logo"> Astro Tech BLC</h1>
+    
+    <p>Informe sua latitude e longitude ou clique em "Usar Localização Atual":</p>
+    <div class="coordinates-input">
+      <input type="number" id="lat" placeholder="Latitude" step="any" min="-90" max="90" aria-label="Informe sua latitude" />
+      <input type="number" id="lon" placeholder="Longitude" step="any" min="-180" max="180" aria-label="Informe sua longitude" />
+    </div>
+    <div>
+      <button onclick="usarLocalizacao()" aria-label="Usar localização atual">📍 Usar Localização Atual</button>
+      <button onclick="carregarAstros()" aria-label="Carregar dados astronômicos">🔭 Ver Céu</button>
+    </div>
+
+    <div class="loading" id="loading">
+      <p>Carregando dados astronômicos...</p>
+    </div>
+
+    <div id="error-message" class="error-message"></div>
+
+    <div id="astro-info"></div>
+
+    <!-- A-Frame for sky visualization -->
+    <a-scene id="sky-map" embedded>
+      <a-sky id="sky" color="#0d1b2a"></a-sky>
+      <a-entity id="stars-container"></a-entity>
+    </a-scene>
+  </div>
+
+  <script>
+    let latitude, longitude;
+    let scene, starsContainer;
+
+    // Inicialização do A-Frame
+    document.addEventListener('DOMContentLoaded', function() {
+      scene = document.querySelector('a-scene');
+      starsContainer = document.getElementById('stars-container');
+      
+      // Aguardar a cena estar carregada
+      scene.addEventListener('loaded', function() {
+        criarEstrelas();
+      });
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('error-message');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    function showLoading(show) {
+      document.getElementById('loading').style.display = show ? 'block' : 'none';
+    }
+
+    function getMoonPhaseName(phase) {
+      if (phase === 0 || phase === 1) return "🌑 Lua Nova";
+      if (phase < 0.25) return "🌒 Lua Crescente";
+      if (phase === 0.25) return "🌓 Quarto Crescente";
+      if (phase < 0.5) return "🌔 Crescente Gibosa";
+      if (phase === 0.5) return "🌕 Lua Cheia";
+      if (phase < 0.75) return "🌖 Minguante Gibosa";
+      if (phase === 0.75) return "🌗 Quarto Minguante";
+      return "🌘 Lua Minguante";
+    }
+
+    function criarEstrelas() {
+      if (!starsContainer) return;
+      
+      starsContainer.innerHTML = '';
+      
+      // Criar estrelas em camadas para melhor performance
+      const layers = 3;
+      const starsPerLayer = 300;
+      
+      for (let layer = 0; layer < layers; layer++) {
+        const distance = 50 + (layer * 25);
+        for (let i = 0; i < starsPerLayer; i++) {
+          const star = document.createElement('a-entity');
+          const size = Math.random() * 0.03 + 0.01;
+          
+          star.setAttribute('geometry', {
+            primitive: 'sphere',
+            radius: size
+          });
+          
+          star.setAttribute('material', {
+            color: '#ffffff',
+            shader: 'flat',
+            opacity: 0.8 - (layer * 0.2)
+          });
+          
+          const theta = Math.random() * Math.PI * 2;
+          const phi = Math.random() * Math.PI;
+          
+          star.setAttribute('position', {
+            x: distance * Math.sin(phi) * Math.cos(theta),
+            y: distance * Math.sin(phi) * Math.sin(theta),
+            z: distance * Math.cos(phi)
+          });
+          
+          starsContainer.appendChild(star);
+        }
+      }
+    }
+
+    function atualizarCenario(corDoCeu) {
+      const sky = document.getElementById('sky');
+      if (sky) {
+        sky.setAttribute('color', corDoCeu);
+        criarEstrelas();
+      }
+    }
+
+    function obterFasesDaLua(lat, lon) {
+      // Validar coordenadas antes de fazer a requisição
+      if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+        throw new Error("Coordenadas inválidas");
+      }
+
+      const url = new URL('https://api.open-meteo.com/v1/forecast');
+      url.searchParams.append('latitude', lat);
+      url.searchParams.append('longitude', lon);
+      url.searchParams.append('daily', 'moon_phase');
+      url.searchParams.append('timezone', 'auto');
+
+      return fetch(url.toString())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`Erro na API: ${res.status} ${res.statusText}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (!data.daily || !data.daily.moon_phase) {
+            throw new Error("Dados de fases da Lua não encontrados");
+          }
+          return data.daily.moon_phase;
+        })
+        .catch(err => {
+          console.error('Erro ao obter fases da Lua:', err);
+          showError(`Erro ao obter fases da Lua: ${err.message}`);
+          throw err;
+        });
+    }
+
+    function usarLocalizacao() {
+      const botao = document.querySelector("button[onclick='usarLocalizacao()']");
+      botao.disabled = true;
+      botao.innerText = "Carregando...";
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            document.getElementById("lat").value = pos.coords.latitude.toFixed(4);
+            document.getElementById("lon").value = pos.coords.longitude.toFixed(4);
+            botao.disabled = false;
+            botao.innerText = "📍 Usar Localização Atual";
+          },
+          err => {
+            let errorMessage = "Erro ao obter localização.";
+            switch(err.code) {
+              case err.PERMISSION_DENIED:
+                errorMessage = "Acesso à localização negado. Por favor, permita o acesso nas configurações do seu navegador.";
+                break;
+              case err.POSITION_UNAVAILABLE:
+                errorMessage = "Localização indisponível. Verifique sua conexão com a internet.";
+                break;
+              case err.TIMEOUT:
+                errorMessage = "Tempo limite excedido ao obter localização.";
+                break;
+            }
+            showError(errorMessage);
+            botao.disabled = false;
+            botao.innerText = "📍 Usar Localização Atual";
+          },
+          { 
+            timeout: 10000,
+            maximumAge: 0,
+            enableHighAccuracy: true 
+          }
+        );
+      } else {
+        showError("Seu navegador não suporta geolocalização.");
+        botao.disabled = false;
+        botao.innerText = "📍 Usar Localização Atual";
+      }
+    }
+
+    function validarCoordenadas(lat, lon) {
+      if (isNaN(lat) || isNaN(lon)) {
+        showError("⚠️ Por favor, informe latitude e longitude válidas.");
+        return false;
+      }
+      if (lat < -90 || lat > 90) {
+        showError("⚠️ A latitude deve estar entre -90 e 90 graus.");
+        return false;
+      }
+      if (lon < -180 || lon > 180) {
+        showError("⚠️ A longitude deve estar entre -180 e 180 graus.");
+        return false;
+      }
+      return true;
+    }
+
+    function carregarAstros() {
+      latitude = parseFloat(document.getElementById("lat").value);
+      longitude = parseFloat(document.getElementById("lon").value);
+
+      if (!validarCoordenadas(latitude, longitude)) {
+        return;
+      }
+
+      showLoading(true);
+      
+      // Alterando a cor do céu baseado na latitude
+      const skyColor = (latitude > 0) ? "#001f3d" : "#0d1b2a";
+      atualizarCenario(skyColor);
+
+      // Obtendo fases da Lua
+      obterFasesDaLua(latitude, longitude)
+        .then(fases => {
+          const fasesFormatadas = fases.map((fase, index) => {
+            const data = new Date();
+            data.setDate(data.getDate() + index);
+            return {
+              date: data,
+              phase: fase,
+              name: getMoonPhaseName(fase)
+            };
+          });
+          
+          const moonPhaseHTML = fasesFormatadas.map(fase => `
+            <div class="moon-phase-item">
+              <div class="moon-phase-name">${fase.name}</div>
+              <div class="moon-phase-value">${(fase.phase * 100).toFixed(1)}%</div>
+              <div class="moon-phase-date">${fase.date.toLocaleDateString()}</div>
+            </div>
+          `).join('');
+          
+          document.getElementById("astro-info").innerHTML = `
+            <h2>🌙 Fases da Lua</h2>
+            <div class="moon-phase">
+              ${moonPhaseHTML}
+            </div>
+            <div class="location-info">
+              📍 Localização: ${latitude.toFixed(4)}°N, ${longitude.toFixed(4)}°E
+            </div>
+          `;
+        })
+        .catch(err => {
+          document.getElementById("astro-info").innerHTML = `
+            <p>Não foi possível carregar os dados da Lua.</p>
+            <div class="location-info">
+              📍 Localização: ${latitude.toFixed(4)}°N, ${longitude.toFixed(4)}°E
+            </div>
+          `;
+        })
+        .finally(() => {
+          showLoading(false);
+        });
+    }
+  </script>
+</body>
+</html>
