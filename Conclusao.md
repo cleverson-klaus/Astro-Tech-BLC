@@ -3,3 +3,9 @@
 ## Objetivos alcançados
 
 Este projeto foi fundamental para colocar em prática conceitos do uso do GitHub como ferramenta de versionamento e colaboração. Além disso, foi possível desenvolver alguns conceitos em JavaScript e entender como funciona o ambiente de trabalho nas áreas de tecnologia.
+
+## Desafios encontrados 
+
+Ao rodar o código utilizado, foi identificado que seria necessário criar um Servidor Local pois apresentou um erro ao ler o arquivo com JavaScript. Também, foi constatado que estava utilizando apenas o duplo clique do HTML, e esse era o motivo de o navegador não conseguir ler o arquivo em JavaScript. Esse erro foi identificado com a ajuda da ferramenta ChatGPT e, com a mesma ferramenta, foi corrigido, possibilitando o uso do Website normalmente.
+
+Além disso, para a criação e upload de imagens no GitHub, encontramos um desafio pois era uma ação a qual não estávamos familiarizado. Para solucionar, foram realizadas pesquisas externas que proporcionaram atingir o objetivo estipulado.
