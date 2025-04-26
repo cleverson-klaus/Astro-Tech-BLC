@@ -1,5 +1,7 @@
 ![Capa do Projeto AstroTech](./capa-astrotech.png)
 
+> _“Olhar para o céu é olhar para o futuro. Nosso papel é ajudar as pessoas a entender e se conectar com esse universo.”_
+
 # Planejamento do Projeto — AstroTech
 
 ## ✨ Visão Geral
@@ -40,7 +42,7 @@ Cada integrante do grupo ficou responsável por uma seção específica:
 - ✅ **Desenvolvimento**: Cleverson Guilherme Klaus de Oliveira  
 - ✅ **Conclusão**: Bruna Larissa Teixeira Moura  
 
-O trabalho foi realizado em _branches_ separadas, com **commits frequentes** e **pull requests revisados**, promovendo um fluxo de trabalho semelhante ao ambiente profissional.
+O trabalho foi realizado em _branchs_ separadas, com **commits frequentes** e **pull requests revisados**, promovendo um fluxo de trabalho semelhante ao ambiente profissional.
 
 ---
 
@@ -65,4 +67,3 @@ O trabalho foi realizado em _branches_ separadas, com **commits frequentes** e *
 
 ---
 
-> _“Olhar para o céu é olhar para o futuro. Nosso papel é ajudar as pessoas a entender e se conectar com esse universo.”_
