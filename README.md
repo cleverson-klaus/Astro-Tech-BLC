@@ -8,7 +8,9 @@
 
 Inspirados pela beleza do céu noturno e a crescente curiosidade popular pela astronomia, nosso grupo decidiu desenvolver uma solução que una ciência, tecnologia e acessibilidade.
 
-A AstroTech é uma empresa de software voltado à gestão de projetos espaciais. Neste projeto, nosso objetivo é criar uma ferramenta simples, intuitiva e colaborativa para fornecer informações sobre eventos astronômicos, tornando a observação do céu mais acessível ao público geral.
+A AstroTech é uma empresa Software de Gestão de Projetos Espaciais, uma ferramenta de gestão ágil focada em projetos de engenharia e ciência que está iniciando um projeto com foco em astronomia. A proposta do nosso grupo é desenvolver um sistema simples, com o objetivo de fornecer informações sobre eventos astronômicos e tornar a observação do céu mais acessível para o público em geral.
+
+A ideia central é criar uma plataforma que mostre eventos como chuvas de meteoros, eclipses, conjunções planetárias e outros fenômenos de forma clara e organizada. Também pensamos em incluir uma visualização do céu em tempo real, para ajudar na identificação de estrelas e constelações.
 
 A plataforma mostrará chuvas de meteoros, eclipses, conjunções planetárias e outros fenômenos de forma clara e organizada. Também está prevista uma visualização do céu em tempo real, auxiliando na identificação de estrelas e constelações.
 
@@ -29,8 +31,9 @@ A plataforma mostrará chuvas de meteoros, eclipses, conjunções planetárias e
 - **Visual Studio Code** — ambiente de desenvolvimento  
 - **Markdown** — documentação clara e leve  
 - **Google Docs** — edição colaborativa  
-- **Google Meet** — reuniões e alinhamento do grupo  
-- **ChatGPT** — apoio na organização textual, brainstorming e revisão  
+- **Google Meet** — reuniões e alinhamento do grupo 
+- **Cursor** — programar e organizar os códigos
+- **ChatGPT** — apoio na organização textual, brainstorming e revisão
 
 ---
 
@@ -66,4 +69,5 @@ O trabalho foi realizado em _branchs_ separadas, com **commits frequentes** e **
 | Dificuldade com Git              | Apoio em grupo e consulta de tutoriais     |
 
 ---
+
 
