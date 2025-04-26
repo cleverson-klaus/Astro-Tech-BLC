@@ -13,3 +13,7 @@ Além disso, para a criação e upload de imagens no GitHub, encontramos um desa
 ## Próximos Passos
 
 Como sugestões de melhorias futuras para a plataforma, prende-se adicionar uma ferramenta de consulta que possa utilizar CEP ou Cidade, para facilitar a pesquisa do usuário. Ainda, pretende-se incluir uma maneira de trazer para o usuário a imagem do céu, podendo distinguir os planetas, satélites, estrelas, etc.
+
+## Conclusão Final
+
+O desenvolvimento deste projeto representou uma etapa significativa na jornada de aprendizado em tecnologia. Foi uma oportunidade de enfrentar erros, buscar soluções e consolidar os conhecimentos adquiridos na teoria, que foram fundamentais para a execução correta do projeto. A experiência prática com o Git, GitHub e uma parcela de JavaScript, mostrou o quanto exercitar essas tecnologias é essencial para compreendê-las de verdade. Este projeto reforçou a importância da curiosidade, da pesquisa e da persistência ao lidar com desafios — valores indispensáveis para qualquer pessoa que deseja evoluir no universo da tecnologia.
