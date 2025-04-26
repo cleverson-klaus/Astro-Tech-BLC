@@ -12,8 +12,6 @@ A AstroTech é uma empresa Software de Gestão de Projetos Espaciais, uma ferram
 
 A ideia central é criar uma plataforma que mostre eventos como chuvas de meteoros, eclipses, conjunções planetárias e outros fenômenos de forma clara e organizada. Também pensamos em incluir uma visualização do céu em tempo real, para ajudar na identificação de estrelas e constelações.
 
-A plataforma mostrará chuvas de meteoros, eclipses, conjunções planetárias e outros fenômenos de forma clara e organizada. Também está prevista uma visualização do céu em tempo real, auxiliando na identificação de estrelas e constelações.
-
 ---
 
 ## 📊 Objetivos do Projeto
